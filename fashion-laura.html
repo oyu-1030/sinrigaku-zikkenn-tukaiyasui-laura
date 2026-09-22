@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L'AURA | Official Online Store</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
+      background-color: #fcfcfc;
+      color: #1a1a1a;
+      line-height: 1.5;
+      padding-bottom: 80px;
+    }
+
+    /* 固定ヘッダー */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 54px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+    .brand-logo {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .header-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .icon-btn {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -8px;
+      background-color: #000;
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: bold;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ヒーロービジュアル */
+    .hero {
+      position: relative;
+      margin: 12px 16px;
+      height: 160px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #e8e8e8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85);
+    }
+    .hero-text {
+      position: absolute;
+      color: #ffffff;
+      text-align: center;
+      padding: 0 16px;
+    }
+    .hero-text h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .hero-text p {
+      font-size: 0.75rem;
+      opacity: 0.9;
+    }
+
+    /* 商品グリッド */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 16px 16px 8px;
+    }
+    .section-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .section-count {
+      font-size: 0.75rem;
+      color: #888;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding: 0 16px;
+    }
+    .product-card {
+      background: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #f0f0f0;
+    }
+    .img-wrap {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      background: #f7f7f7;
+      position: relative;
+    }
+    .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .badge {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      font-size: 0.6rem;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+    .product-info {
+      padding: 8px 10px 10px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .product-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #222;
+      margin-bottom: 2px;
+      line-height: 1.3;
+    }
+    .product-desc {
+      font-size: 0.68rem;
+      color: #777;
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+    .product-price {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #111;
+      margin-top: auto;
+    }
+
+    /* カテゴリーから探す セクション */
+    .category-search-section {
+      padding: 24px 16px 8px;
+    }
+    .category-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .category-card {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #f0f0f0;
+      border-radius: 10px;
+      padding: 8px 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: background-color 0.15s ease;
+    }
+    .category-card:active {
+      background-color: #f7f7f7;
+    }
+    .category-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      object-fit: cover;
+      background-color: #f0f0f0;
+      flex-shrink: 0;
+    }
+    .category-info {
+      margin-left: 12px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .category-name-jp {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #222;
+      letter-spacing: 0.03em;
+    }
+    .category-name-en {
+      font-size: 0.65rem;
+      color: #999;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .category-arrow {
+      color: #ccc;
+      display: flex;
+      align-items: center;
+    }
+
+    /* ボトムナビゲーション */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: #ffffff;
+      border-top: 1px solid #eee;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      z-index: 100;
+    }
+    .nav-item {
+      background: none;
+      border: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #888;
+      font-size: 0.65rem;
+      gap: 2px;
+      cursor: pointer;
+    }
+    .nav-item.active {
+      color: #000;
+      font-weight: bold;
+    }
+    .nav-item svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+/* --- カテゴリードロワー（モーダル） --- */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s;
+}
+.drawer-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+.category-drawer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  max-height: 80vh;
+  background: #ffffff;
+  border-radius: 16px 16px 0 0;
+  z-index: 210;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+.drawer-overlay.is-open .category-drawer {
+  transform: translateY(0);
+}
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.drawer-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.drawer-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #888;
+  cursor: pointer;
+  padding: 4px;
+}
+.drawer-body {
+  padding: 16px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
+
+/* 固定ヘッダーの重なり順を最前面に設定 */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 250; /* どのサブページよりも手前に表示 */
+      height: 54px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+
+    /* サブページ共通スタイル（ヘッダー下部から全画面に展開） */
+    .sub-page {
+      position: fixed;
+      top: 54px; /* 固定ヘッダーの高さ分下に配置 */
+      left: 0;
+      width: 100%;
+      height: calc(100% - 54px);
+      background: #fcfcfc;
+      z-index: 150;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      padding-bottom: 90px;
+    }
+    .sub-page.is-active {
+      transform: translateX(0);
+    }
+    .page-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 52px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 12px;
+    }
+    .back-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      margin-left: -6px;
+    }
+    .page-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+
+    /* 商品詳細ページ専用レイアウト */
+    .detail-img-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1.1;
+      background: #f0f0f0;
+    }
+    .detail-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .detail-body {
+      padding: 20px 16px;
+    }
+    .detail-cat-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      color: #666;
+      background: #eee;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .detail-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 8px;
+    }
+    .detail-price {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .detail-desc {
+      font-size: 0.85rem;
+      color: #555;
+      line-height: 1.7;
+      padding-top: 14px;
+      border-top: 1px solid #eee;
+    }
+    .detail-add-btn {
+      width: 100%;
+      height: 48px;
+      background: #111;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      margin-top: 24px;
+      cursor: pointer;
+    }
+    .detail-add-btn:active {
+      background: #333;
+    }
+
+    /* カート画面専用スタイル */
+    .cart-item-list {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cart-empty-msg {
+      text-align: center;
+      color: #999;
+      font-size: 0.85rem;
+      padding: 40px 16px;
+    }
+    .cart-card {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid #f0f0f0;
+      border-radius: 8px;
+      padding: 10px;
+      gap: 12px;
+    }
+    .cart-thumb {
+      width: 60px;
+      height: 60px;
+      border-radius: 6px;
+      object-fit: cover;
+      background-color: #f0f0f0;
+      flex-shrink: 0;
+    }
+    .cart-item-info {
+      flex-grow: 1;
+    }
+    .cart-item-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #222;
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .cart-item-price {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #111;
+    }
+    .cart-remove-btn {
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 0.75rem;
+      cursor: pointer;
+      padding: 6px;
+    }
+    .cart-remove-btn:active {
+      color: #333;
+    }
+    .cart-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #ffffff;
+      border-top: 1px solid #eee;
+      padding: 16px;
+      box-sizing: border-box;
+      z-index: 10;
+    }
+    .cart-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+    .cart-total-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #666;
+    }
+    .cart-total-price {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #111;
+    }
+    .checkout-btn {
+      width: 100%;
+      height: 46px;
+      background: #111;
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .checkout-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    /* 店舗詳細ページ専用スタイル */
+    .shop-list {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .shop-card {
+      background: #ffffff;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .shop-badge {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      background: #111;
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .shop-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+    }
+    .shop-info-row {
+      display: flex;
+      font-size: 0.8rem;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .shop-info-label {
+      width: 64px;
+      color: #888;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .shop-info-value {
+      color: #333;
+    }
+   
+  </style>
+</head>
+
+  </style>
+</head>
+<body>
+
+  <!-- 固定ヘッダー -->
+  <header>
+    <div class="brand-logo">L'AURA</div>
+    <div class="header-actions">
+      <button class="icon-btn" aria-label="検索">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
+
+      <!-- 常駐カート -->
+      <button class="icon-btn" id="openCartBtn" aria-label="カート">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-badge" id="headerCartBadge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- メインビジュアル -->
+  <section class="hero">
+    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=80" alt="新作コレクション">
+    <div class="hero-text">
+      <h2>2026 AUTUMN</h2>
+      <p>日常になじむ、<br>上質で軽やかなベーシック。</p>
+    </div>
+  </section>
+
+  <!-- メイン商品一覧（おすすめ） -->
+  <section>
+    <div class="section-header">
+      <h3 class="section-title">おすすめアイテム</h3>
+      <span class="section-count">全 4 件</span>
+    </div>
+
+    <div class="product-grid">
+      <!-- 1. コート（アウター / o1） -->
+      <article class="product-card home-product-card" data-category="outer" data-id="o1" style="cursor: pointer;">
+        <div class="img-wrap">
+          <span class="badge">NEW</span>
+          <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&q=80" alt="コート">
+        </div>
+        <div class="product-info">
+          <h4 class="product-name">ウールブレンド<br>スタンドカラーコート</h4>
+          <p class="product-desc">軽くて暖かい<br>端正なシルエット</p>
+          <div class="product-price">¥18,900</div>
+        </div>
+      </article>
+
+      <!-- 2. ニット（トップス / t1） -->
+      <article class="product-card home-product-card" data-category="tops" data-id="t1" style="cursor: pointer;">
+        <div class="img-wrap">
+          <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&q=80" alt="ニット">
+        </div>
+        <div class="product-info">
+          <h4 class="product-name">プレミアム<br>クルーネックニット</h4>
+          <p class="product-desc">チクチクしない<br>柔らかな肌触り</p>
+          <div class="product-price">¥8,400</div>
+        </div>
+      </article>
+
+      <!-- 3. スラックス（ボトムス / b1） -->
+      <article class="product-card home-product-card" data-category="bottoms" data-id="b1" style="cursor: pointer;">
+        <div class="img-wrap">
+          <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=500&q=80" alt="スラックス">
+        </div>
+        <div class="product-info">
+          <h4 class="product-name">ワイドテーパード<br>スラックス</h4>
+          <p class="product-desc">美しいドレープと<br>快適な着心地</p>
+          <div class="product-price">¥9,800</div>
+        </div>
+      </article>
+
+      <!-- 4. スニーカー（シューズ / s1） -->
+      <article class="product-card home-product-card" data-category="shoes" data-id="s1" style="cursor: pointer;">
+        <div class="img-wrap">
+          <span class="badge">人気</span>
+          <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&q=80" alt="スニーカー">
+        </div>
+        <div class="product-info">
+          <h4 class="product-name">ミニマル<br>レザースニーカー</h4>
+          <p class="product-desc">どんな装いにも<br>馴染むミニマル設計</p>
+          <div class="product-price">¥12,500</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- カテゴリーから探す セクション -->
+  <section class="category-search-section">
+    <div class="section-header" style="padding: 0 0 6px 0;">
+      <h3 class="section-title">カテゴリーから探す</h3>
+      <span class="section-count">全5項目</span>
+    </div>
+
+<div class="category-list">
+      <a href="javascript:void(0)" data-category="outer" class="category-card category-trigger">
+        <img class="category-thumb" src="https://images.unsplash.com/photo-1544923246-77307dd654cb?w=150&q=80" alt="アウター">
+        <div class="category-info">
+          <span class="category-name-jp">アウター</span>
+          <span class="category-name-en">Outerwear</span>
+        </div>
+        <div class="category-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </a>
+
+      <a href="javascript:void(0)" data-category="tops" class="category-card category-trigger">
+        <img class="category-thumb" src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=150&q=80" alt="トップス">
+        <div class="category-info">
+          <span class="category-name-jp">トップス</span>
+          <span class="category-name-en">Tops</span>
+        </div>
+        <div class="category-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </a>
+
+      <a href="javascript:void(0)" data-category="bottoms" class="category-card category-trigger">
+        <img class="category-thumb" src="https://images.unsplash.com/photo-1542272604-780c96856592?w=150&q=80" alt="ボトムス">
+        <div class="category-info">
+          <span class="category-name-jp">ボトムス</span>
+          <span class="category-name-en">Bottoms</span>
+        </div>
+        <div class="category-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </a>
+
+      <a href="javascript:void(0)" data-category="shoes" class="category-card category-trigger">
+        <img class="category-thumb" src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=150&q=80" alt="シューズ">
+        <div class="category-info">
+          <span class="category-name-jp">シューズ</span>
+          <span class="category-name-en">Shoes</span>
+        </div>
+        <div class="category-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </a>
+
+      <a href="javascript:void(0)" data-category="bags" class="category-card category-trigger">
+        <img class="category-thumb" src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=150&q=80" alt="バッグ">
+        <div class="category-info">
+          <span class="category-name-jp">バッグ</span>
+          <span class="category-name-en">Bags</span>
+        </div>
+        <div class="category-arrow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </div>
+      </a>
+    </div>
+
+      </section>
+
+  <!-- 固定ボトムナビゲーション -->
+  <footer class="bottom-nav">
+    <button class="nav-item active">
+      <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      ホーム
+    </button>
+    <button class="nav-item" id="openCategoryDrawer">
+      <svg viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+      カテゴリー
+    </button>
+    <button class="nav-item" id="openShopInfoBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </svg>
+      店舗詳細
+    </button>
+  </footer>
+
+</footer>
+
+  <!-- ▼▼▼ ここから追加（</footer> の直後） ▼▼▼ -->
+  <div class="drawer-overlay" id="drawerOverlay">
+    <div class="category-drawer">
+      <div class="drawer-header">
+        <span class="drawer-title">カテゴリーから探す</span>
+        <button class="drawer-close-btn" id="closeCategoryDrawer" aria-label="閉じる">✕</button>
+      </div>
+      
+  <div class="drawer-body">
+        <a href="javascript:void(0)" data-category="outer" class="category-card drawer-item category-trigger">
+          <img class="category-thumb" src="https://images.unsplash.com/photo-1544923246-77307dd654cb?w=150&q=80" alt="アウター">
+          <div class="category-info">
+            <span class="category-name-jp">アウター</span>
+            <span class="category-name-en">Outerwear</span>
+          </div>
+          <div class="category-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+        </a>
+
+        <a href="javascript:void(0)" data-category="tops" class="category-card drawer-item category-trigger">
+          <img class="category-thumb" src="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=150&q=80" alt="トップス">
+          <div class="category-info">
+            <span class="category-name-jp">トップス</span>
+            <span class="category-name-en">Tops</span>
+          </div>
+          <div class="category-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+        </a>
+
+        <a href="javascript:void(0)" data-category="bottoms" class="category-card drawer-item category-trigger">
+          <img class="category-thumb" src="https://images.unsplash.com/photo-1542272604-780c96856592?w=150&q=80" alt="ボトムス">
+          <div class="category-info">
+            <span class="category-name-jp">ボトムス</span>
+            <span class="category-name-en">Bottoms</span>
+          </div>
+          <div class="category-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+        </a>
+
+        <a href="javascript:void(0)" data-category="shoes" class="category-card drawer-item category-trigger">
+          <img class="category-thumb" src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=150&q=80" alt="シューズ">
+          <div class="category-info">
+            <span class="category-name-jp">シューズ</span>
+            <span class="category-name-en">Shoes</span>
+          </div>
+          <div class="category-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+        </a>
+
+        <a href="javascript:void(0)" data-category="bags" class="category-card drawer-item category-trigger">
+          <img class="category-thumb" src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=150&q=80" alt="バッグ">
+          <div class="category-info">
+            <span class="category-name-jp">バッグ</span>
+            <span class="category-name-en">Bags</span>
+          </div>
+          <div class="category-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+  <!-- ▲▲▲ ここまで追加 ▲▲▲ -->
+
+<section class="sub-page" id="categoryListPage">
+    <div class="page-header">
+      <button class="back-btn" id="catPageBackBtn" aria-label="戻る">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <h2 class="page-title" id="catPageTitle">カテゴリー</h2>
+    </div>
+    
+    <div class="section-header">
+      <span class="section-title">商品一覧</span>
+      <span class="section-count" id="catProductCount">全4件</span>
+    </div>
+    <div class="product-grid" id="catProductGrid">
+      <!-- JavaScriptで4つの商品カードを自動生成します -->
+    </div>
+  </section>
+
+  <!-- 2. 商品詳細ページ（別ページ表示） -->
+  <section class="sub-page" id="productDetailPage" style="z-index: 160;">
+    <div class="page-header">
+      <button class="back-btn" id="detailPageBackBtn" aria-label="戻る">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <h2 class="page-title">商品詳細</h2>
+    </div>
+
+    <div class="detail-img-wrap">
+      <img id="detailImg" src="" alt="">
+    </div>
+    <div class="detail-body">
+      <span class="detail-cat-badge" id="detailCategory">CATEGORY</span>
+      <h1 class="detail-title" id="detailName">商品名</h1>
+      <div class="detail-price" id="detailPrice">¥0</div>
+      <p class="detail-desc" id="detailDesc">商品の説明テキスト</p>
+      <button class="detail-add-btn" id="addToCartBtn">カートに入れる</button>
+    </div>
+  </section>
+
+<!-- 3. ショッピングカートページ -->
+  <section class="sub-page" id="cartPage" style="z-index: 200; padding-bottom: 150px;">
+    <div class="page-header">
+      <button class="back-btn" id="cartPageBackBtn" aria-label="戻る">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <h2 class="page-title">ショッピングカート</h2>
+    </div>
+
+    <!-- カート内の商品一覧 -->
+    <div class="cart-item-list" id="cartItemList">
+      <!-- JavaScriptで追加された商品を表示します -->
+    </div>
+
+    <!-- 合計金額と購入手続きボタン（画面下に固定） -->
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span class="cart-total-label">合計（税込）</span>
+        <span class="cart-total-price" id="cartTotalPrice">¥0</span>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn" disabled>ご購入手続きへ進む</button>
+    </div>
+  </section>
+
+<!-- 4. 店舗詳細ページ -->
+  <section class="sub-page" id="shopInfoPage" style="z-index: 180;">
+    <div class="page-header">
+      <button class="back-btn" id="shopPageBackBtn" aria-label="戻る">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <h2 class="page-title">ショップ情報</h2>
+    </div>
+
+    <div class="shop-list">
+      <!-- 1号店（本店） -->
+      <article class="shop-card">
+        <span class="shop-badge">FLAGSHIP</span>
+        <h3 class="shop-name">青山店（本店）</h3>
+        <div class="shop-info-row">
+          <span class="shop-info-label">所在地</span>
+          <span class="shop-info-value">東京都港区南青山5-8-12<br>L'AURA Building 1F</span>
+        </div>
+        <div class="shop-info-row">
+          <span class="shop-info-label">営業時間</span>
+          <span class="shop-info-value">11:00 〜 21:00</span>
+        </div>
+      </article>
+
+      <!-- 2号店 -->
+      <article class="shop-card">
+        <span class="shop-badge" style="background: #444;">2号店</span>
+        <h3 class="shop-name">横浜みなとみらい店</h3>
+        <div class="shop-info-row">
+          <span class="shop-info-label">所在地</span>
+          <span class="shop-info-value">神奈川県横浜市西区みなとみらい3-4-2<br>ベイサイドモール 2F</span>
+        </div>
+        <div class="shop-info-row">
+          <span class="shop-info-label">営業時間</span>
+          <span class="shop-info-value">10:30 〜 20:00</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <script>
+    const openBtn = document.getElementById('openCategoryDrawer');
+    const closeBtn = document.getElementById('closeCategoryDrawer');
+    const overlay = document.getElementById('drawerOverlay');
+    const drawerItems = document.querySelectorAll('.drawer-item');
+
+    // 開く
+    function openDrawer() {
+      overlay.classList.add('is-open');
+      document.body.style.overflow = 'hidden'; // 背景スクロールを固定
+    }
+
+    // 閉じる
+    function closeDrawer() {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+
+    // イベント登録
+    openBtn.addEventListener('click', openDrawer);
+    closeBtn.addEventListener('click', closeDrawer);
+
+    // 暗い背景部分をタップした時に閉じる
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) closeDrawer();
+    });
+
+    // メニュー項目を選んだら閉じる
+    drawerItems.forEach(item => {
+      item.addEventListener('click', closeDrawer);
+    });
+
+// 各カテゴリーの商品データ（各4アイテム）
+    const categoryData = {
+      outer: {
+        name: "アウター",
+        items: [
+          { id: "o1", name: "ウールブレンド\nスタンドカラーコート", price: "¥18,900", desc: "上質なウールブレンド素材で仕立てた軽やかで暖かいコート。\n立体的な襟元が首元を美しく見せます。", img: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&q=80" },
+          { id: "o2", name: "オーバーサイズ\nトレンチコート", price: "¥21,000", desc: "撥水加工を施した高密度ギャバジン素材を使用。\nバサッと羽織るだけでこなれた印象に。", img: "https://images.unsplash.com/photo-1544923246-77307dd654cb?w=600&q=80" },
+          { id: "o3", name: "ショート\nダウンジャケット", price: "¥16,500", desc: "すっきりとした丈感でボトムスを選ばない万能アウター。\n優れた保温性と軽さを両立しました。", img: "https://images.unsplash.com/photo-1548883354-7622d03aca27?w=600&q=80" },
+          { id: "o4", name: "ノーカラー\nキルティングジャケット", price: "¥13,800", desc: "秋口の羽織りから真冬のインナーダウンまで\nロングシーズン活躍する一着。", img: "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&q=80" }
+        ]
+      },
+      tops: {
+        name: "トップス",
+        items: [
+          { id: "t1", name: "プレミアム\nクルーネックニット", price: "¥8,400", desc: "チクチク感を抑えた滑らかな肌触り。\nご自宅で手洗いできるウォッシャブル仕様。", img: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&q=80" },
+          { id: "t2", name: "リラックス\nバンドカラーシャツ", price: "¥7,200", desc: "自然なシワ感を楽しめるフレンチリネン混紡。\n適度なゆとりでリラックスした着心地。", img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=600&q=80" },
+          { id: "t3", name: "ヘビーウェイト\nボートネックロンT", price: "¥5,500", desc: "型崩れしにくいタフなコットン100%。\n一枚着でもインナーでもサマになる絶妙なシルエット。", img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&q=80" },
+          { id: "t4", name: "ルーズフィット\nスウェットパーカー", price: "¥8,900", desc: "裏パイル仕立てで柔らかな着心地。\nフードが綺麗に立ち上がるこだわりの設計。", img: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=600&q=80" }
+        ]
+      },
+      bottoms: {
+        name: "ボトムス",
+        items: [
+          { id: "b1", name: "ワイドテーパード\nスラックス", price: "¥9,800", desc: "美しいドレープと快適なストレッチ性。\nオンオフ問わず使える万能シルエット。", img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=600&q=80" },
+          { id: "b2", name: "ストレート\nセルビッジデニム", price: "¥12,000", desc: "穿き込むほどに体に馴染むクラシックデニム。\n足のラインを拾わずすっきり見せます。", img: "https://images.unsplash.com/photo-1542272604-780c96856592?w=600&q=80" },
+          { id: "b3", name: "イージーケア\nプリーツスカート", price: "¥8,800", desc: "歩くたびに美しく揺れる細めのプリーツ。\nシワになりにくく旅行にも便利です。", img: "https://images.unsplash.com/photo-1583496661160-fb5886a0aaaa?w=600&q=80" },
+          { id: "b4", name: "リラックス\nカーゴパンツ", price: "¥9,200", desc: "ミリタリー感を程よく抑えた都会的な仕上がり。\nウエストゴム仕様で履き心地も抜群。", img: "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?w=600&q=80" }
+        ]
+      },
+      shoes: {
+        name: "シューズ",
+        items: [
+          { id: "s1", name: "ミニマル\nレザースニーカー", price: "¥12,500", desc: "余計な装飾を削ぎ落としたクリーンな一足。\nクッション性の高いインソールで疲れにくい設計。", img: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=600&q=80" },
+          { id: "s2", name: "クラシック\nコインローファー", price: "¥15,800", desc: "艶のある上質なカウレザーを採用。\n足元を引き締める端正なトラッドスタイルに。", img: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=600&q=80" },
+          { id: "s3", name: "サイドゴア\nショートブーツ", price: "¥17,200", desc: "着脱がスムーズなサイドゴア仕様。\n雨の日も歩きやすいグリップ力のあるソール。", img: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=80" },
+          { id: "s4", name: "キャンバス\nスリッポン", price: "¥6,800", desc: "デイリーに使える軽やかなスリッポン。\nどんなコーディネートにも自然に溶け込みます。", img: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=600&q=80" }
+        ]
+      },
+      bags: {
+        name: "バッグ",
+        items: [
+          { id: "bg1", name: "スクエア\nレザーショルダー", price: "¥11,000", desc: "ミニマルなスクエアフォルム。\nスマートフォンと財布がすっぽり収まる手頃なサイズ。", img: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80" },
+          { id: "bg2", name: "キャンバス\nビッグトートバッグ", price: "¥6,500", desc: "ノートPCやA4書類もしっかり入る大容量。\n内側ポケット付きで小物の整理も快適。", img: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=600&q=80" },
+          { id: "bg3", name: "ナイロン\nデイリーバックパック", price: "¥9,900", desc: "軽量かつ撥水性に優れた高密度ナイロン。\n通勤・通学から週末のお出かけまで。", img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&q=80" },
+          { id: "bg4", name: "巾着型\nドローストリングバッグ", price: "¥7,800", desc: "ころんとしたフォルムがアクセントになる巾着バッグ。\n柔らかなフェイクレザー製。", img: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&q=80" }
+        ]
+      }
+    };
+
+    // DOM要素の取得
+    const catPage = document.getElementById('categoryListPage');
+    const catTitle = document.getElementById('catPageTitle');
+    const catGrid = document.getElementById('catProductGrid');
+    const catBackBtn = document.getElementById('catPageBackBtn');
+
+    const detailPage = document.getElementById('productDetailPage');
+    const detailImg = document.getElementById('detailImg');
+    const detailCat = document.getElementById('detailCategory');
+    const detailName = document.getElementById('detailName');
+    const detailPrice = document.getElementById('detailPrice');
+    const detailDesc = document.getElementById('detailDesc');
+    const detailBackBtn = document.getElementById('detailPageBackBtn');
+
+    // カテゴリー一覧ページを開く処理
+    function openCategoryPage(categoryKey) {
+      const cat = categoryData[categoryKey];
+      if (!cat) return;
+
+      catTitle.textContent = cat.name;
+      catGrid.innerHTML = '';
+
+      // 該当カテゴリーの4アイテムを動的生成
+      cat.items.forEach(item => {
+        const card = document.createElement('article');
+        card.className = 'product-card';
+        card.style.cursor = 'pointer';
+        card.innerHTML = `
+          <div class="img-wrap">
+            <img src="${item.img}" alt="${item.name.replace('\n', ' ')}">
+          </div>
+          <div class="product-info">
+            <h4 class="product-name">${item.name.replace(/\n/g, '<br>')}</h4>
+            <div class="product-price">${item.price}</div>
+          </div>
+        `;
+        // 商品タップ時に詳細ページを開く
+        card.addEventListener('click', () => {
+          openDetailPage(item, cat.name);
+        });
+        catGrid.appendChild(card);
+      });
+
+      catPage.classList.add('is-active');
+    }
+
+    // 商品詳細ページを開く処理
+    function openDetailPage(item, categoryName) {
+      detailImg.src = item.img;
+      detailCat.textContent = categoryName;
+      detailName.innerHTML = item.name.replace(/\n/g, '<br>');
+      detailPrice.textContent = item.price;
+      detailDesc.innerHTML = item.desc.replace(/\n/g, '<br>');
+
+      detailPage.classList.add('is-active');
+    }
+
+    // 戻るボタンの動作
+    catBackBtn.addEventListener('click', () => catPage.classList.remove('is-active'));
+    detailBackBtn.addEventListener('click', () => detailPage.classList.remove('is-active'));
+
+    // 各カテゴリーのリンクをクリックしたときのイベント付与
+    document.querySelectorAll('.category-trigger').forEach(trigger => {
+      trigger.addEventListener('click', (e) => {
+        e.preventDefault();
+        const key = trigger.getAttribute('data-category');
+        openCategoryPage(key);
+      });
+    });
+
+// --- カート機能の管理 ---
+    const cart = [];
+    let currentDetailItem = null; // 詳細画面で現在選ばれている商品
+
+    const cartPage = document.getElementById('cartPage');
+    const openCartBtn = document.getElementById('openCartBtn');
+    const cartPageBackBtn = document.getElementById('cartPageBackBtn');
+    const cartItemList = document.getElementById('cartItemList');
+    const cartTotalPrice = document.getElementById('cartTotalPrice');
+    const headerCartBadge = document.getElementById('headerCartBadge');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const addToCartBtn = document.getElementById('addToCartBtn');
+
+    // 商品詳細を開く処理を上書きして、現在選択された商品を記録
+    const originalOpenDetailPage = openDetailPage;
+    openDetailPage = function(item, categoryName) {
+      currentDetailItem = item; // 表示中のアイテムを記憶
+      originalOpenDetailPage(item, categoryName);
+    };
+
+    // カート画面の表示更新＆合計金額の計算
+    function updateCartUI() {
+      // 1. ヘッダーのバッジ更新
+      if (headerCartBadge) {
+        headerCartBadge.textContent = cart.length;
+        headerCartBadge.style.display = cart.length > 0 ? 'flex' : 'none';
+      }
+
+      // 2. カート内一覧のクリア
+      cartItemList.innerHTML = '';
+
+      // カートが空の場合
+      if (cart.length === 0) {
+        cartItemList.innerHTML = '<div class="cart-empty-msg">カートに商品が入っていません。</div>';
+        cartTotalPrice.textContent = '¥0';
+        if (checkoutBtn) checkoutBtn.disabled = true;
+        return;
+      }
+
+      if (checkoutBtn) checkoutBtn.disabled = false;
+      let total = 0;
+
+      // 3. カート内の商品を1件ずつ生成
+      cart.forEach((item, index) => {
+        // 金額の文字列から数字だけを取り出して合算（例: "¥18,900" -> 18900）
+        const numPrice = parseInt(item.price.replace(/[^0-9]/g, ''), 10);
+        total += numPrice;
+
+        const row = document.createElement('div');
+        row.className = 'cart-card';
+        row.innerHTML = `
+          <img class="cart-thumb" src="${item.img}" alt="${item.name.replace('\n', ' ')}">
+          <div class="cart-item-info">
+            <h3 class="cart-item-title">${item.name.replace(/\n/g, ' ')}</h3>
+            <div class="cart-item-price">${item.price}</div>
+          </div>
+          <button class="cart-remove-btn" data-index="${index}">削除</button>
+        `;
+        cartItemList.appendChild(row);
+      });
+
+      // 4. 合計金額を表示
+      cartTotalPrice.textContent = '¥' + total.toLocaleString();
+
+      // 5. 削除ボタンの処理
+      cartItemList.querySelectorAll('.cart-remove-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const idx = parseInt(e.target.getAttribute('data-index'), 10);
+          cart.splice(idx, 1); // 配列から削除
+          updateCartUI();      // カート画面とバッジを再描画
+        });
+      });
+    }
+
+    // 「カートに入れる」ボタンを押したときの処理
+    if (addToCartBtn) {
+      addToCartBtn.addEventListener('click', () => {
+        if (!currentDetailItem) return;
+        
+        // 配列に追加してカートを更新
+        cart.push(currentDetailItem);
+        updateCartUI();
+
+        // そのままカート画面をスライド表示
+        cartPage.classList.add('is-active');
+      });
+    }
+
+    // ヘッダー右上のカートボタンを押してカート画面を開く（どのページからでも最前面へ）
+    if (openCartBtn) {
+      openCartBtn.addEventListener('click', () => {
+        updateCartUI();
+        // ドロワーが開いていれば閉じる
+        if (typeof closeDrawer === 'function') closeDrawer();
+        cartPage.classList.add('is-active');
+      });
+    }
+
+    // カート画面の「← 戻る」ボタン
+    if (cartPageBackBtn) {
+      cartPageBackBtn.addEventListener('click', () => {
+        cartPage.classList.remove('is-active');
+      });
+    }
+
+// ホーム画面（おすすめアイテム）のカードをクリックした時のイベント
+    document.querySelectorAll('.home-product-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const catKey = card.getAttribute('data-category');
+        const itemId = card.getAttribute('data-id');
+        const cat = categoryData[catKey];
+
+        if (cat) {
+          const item = cat.items.find(i => i.id === itemId);
+          if (item) {
+            openDetailPage(item, cat.name);
+          }
+        }
+      });
+    });
+
+    // 初回初期化
+    updateCartUI();
+
+// --- 店舗詳細ページの開閉処理 ---
+    const shopPage = document.getElementById('shopInfoPage');
+    const openShopBtn = document.getElementById('openShopInfoBtn');
+    const shopPageBackBtn = document.getElementById('shopPageBackBtn');
+
+    if (openShopBtn && shopPage) {
+      // フッターの「店舗詳細」ボタンを押したとき
+      openShopBtn.addEventListener('click', () => {
+        // ドロワーが開いていれば閉じる
+        if (typeof closeDrawer === 'function') closeDrawer();
+        shopPage.classList.add('is-active');
+      });
+    }
+
+    if (shopPageBackBtn && shopPage) {
+      // 「← 戻る」ボタンを押したとき
+      shopPageBackBtn.addEventListener('click', () => {
+        shopPage.classList.remove('is-active');
+      });
+    }
+
+  </script>
+</body>
+</html>
