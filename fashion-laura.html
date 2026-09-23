@@ -335,28 +335,44 @@
   padding-bottom: calc(24px + env(safe-area-inset-bottom));
 }
 
-/* 固定ヘッダーの重なり順を最前面に設定 */
+/* 固定ヘッダー（最前面に常駐） */
     header {
       position: sticky;
       top: 0;
-      z-index: 250; /* どのサブページよりも手前に表示 */
-      height: 54px;
+      z-index: 250;
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid #eee;
+    }
+
+    /* 架空サイト告知バー（高さ26px） */
+    .fictional-notice-bar {
+      background-color: #222;
+      color: #fff;
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-align: center;
+      line-height: 26px;
+      height: 26px;
+      font-weight: 500;
+    }
+
+    /* ヘッダー内部のレイアウト（高さ54px） */
+    .header-inner {
+      height: 54px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 0 16px;
     }
 
-    /* サブページ共通スタイル（ヘッダー下部から全画面に展開） */
+    /* サブページ共通スタイル（帯26px + ヘッダー54px = 80px 分下に配置） */
     .sub-page {
       position: fixed;
-      top: 54px; /* 固定ヘッダーの高さ分下に配置 */
+      top: 80px; 
       left: 0;
       width: 100%;
-      height: calc(100% - 54px);
+      height: calc(100% - 80px);
       background: #fcfcfc;
       z-index: 150;
       overflow-y: auto;
